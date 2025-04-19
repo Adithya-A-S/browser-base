@@ -1,36 +1,24 @@
-import { Stagehand } from "@browserbasehq/stagehand";
-type AutomationPrompt = {
-  action: string; // e.g., "Click", "Fill", "Submit"
-  selector?: string; // CSS selector for the element to act on
-  value?: string; // Value to fill in case of input actions
-};
+import { Stagehand, Page, BrowserContext } from "@browserbasehq/stagehand";
+import StagehandConfig from "./stagehand.config.js";
 
-async function executeAutomation(prompts: AutomationPrompt[]) {
-  const page = await Stagehand.open();
+async function example() {
+  const stagehand = new Stagehand({
+    ...StagehandConfig,
+  });
+  await stagehand.init();
+  const page = stagehand.page;
+  await page.goto("https://www.youtube.com");
+  await page.act(
+    "on search bar click and search retro tamil trailer, click on search icon or click enter",
+  );
 
-  for (const prompt of prompts) {
-    switch (prompt.action) {
-      case "Click":
-        if (!prompt.selector) throw new Error("Missing selector for 'Click' action");
-        await page.click(prompt.selector);
-        break;
+  await page.act("Click the first link");
+  await page.act("Click the play button");
 
-      case "Fill":
-        if (!prompt.selector || !prompt.value) throw new Error("Missing selector or value for 'Fill' action");
-        await page.fill(prompt.selector, prompt.value);
-        break;
-
-      case "Submit":
-        if (!prompt.selector) throw new Error("Missing selector for 'Submit' action");
-        await page.click(prompt.selector);
-        break;
-
-      default:
-        console.warn(`Unknown action: ${prompt.action}`);
-    }
-  }
-
-  console.log("Automation complete!");
+  // wait for the video to end
+  await page.waitForTimeout(10000);z
 }
 
-export default executeAutomation;
+(async () => {
+  await example();
+})();
