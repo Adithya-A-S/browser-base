@@ -1,5 +1,7 @@
-import { Stagehand, Page, BrowserContext } from "@browserbasehq/stagehand";
+import { Stagehand } from "@browserbasehq/stagehand";
 import StagehandConfig from "./stagehand.config.js";
+import { parsePrompts, PromptStep } from "./promptsParser.js";
+import { actWithCache } from "./utils.js"; // Use the cached action handler
 
 async function example() {
   const stagehand = new Stagehand({
@@ -7,16 +9,22 @@ async function example() {
   });
   await stagehand.init();
   const page = stagehand.page;
-  await page.goto("https://www.youtube.com");
-  await page.act(
-    "on search bar click and search retro tamil trailer, click on search icon or click enter",
-  );
 
-  await page.act("Click the first link");
-  await page.act("Click the play button");
+  // Parse prompts.json
+  const prompts = await parsePrompts("prompts.json");
 
-  // wait for the video to end
-  await page.waitForTimeout(10000);z
+  // Execute steps dynamically
+  for (const step of prompts) {
+    if (step.goto) {
+      await page.goto(step.goto);
+    }
+    if (step.act) {
+      await page.act(step.act);
+    }
+    if (step.wait) {
+      await page.waitForTimeout(step.wait * 500); // Convert seconds to milliseconds
+    }
+  }
 }
 
 (async () => {

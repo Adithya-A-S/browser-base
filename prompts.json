@@ -1,0 +1,13 @@
+{
+    "steps": [
+        { "goto": "https://www.youtube.com"},
+        { "act": "search for 'funny cat videos'"},
+        { "act": "press enter"},
+        { "wait": 2},
+        { "act": "click on the first video" },
+        { "wait": 2},
+        { "act": "wait for the page to load" },
+        { "wait": 2},
+        { "act": "click on the play button" }
+    ]
+}
