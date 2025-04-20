@@ -1,6 +1,7 @@
 import type { ConstructorParams } from "@browserbasehq/stagehand";
 import dotenv from "dotenv";
 
+// Load environment variables from .env file
 dotenv.config();
 
 const StagehandConfig: ConstructorParams = {
@@ -10,7 +11,7 @@ const StagehandConfig: ConstructorParams = {
   // LLM configuration
   modelName: "gemini-2.0-flash" /* Name of the model to use */,
   modelClientOptions: {
-    apiKey:"AIzaSyAzVGiC_D0c-PgpltgexTXbOI5dkXEZSzw",
+    apiKey: process.env.GEMINI_API_KEY || "" /* Read API key from .env */,
   } /* Configuration options for the model client */,
 
   // Browser configuration

@@ -1,10 +1,28 @@
 {
   "name": "b-autox",
   "type": "module",
+  "version": "1.0.0",
   "scripts": {
     "build": "tsc",
     "start": "tsx index.ts",
     "postinstall": "playwright install"
+  },
+  "bin": {
+    "b-autox": "./dist/cli.js"
+  },
+  "pkg": {
+    "scripts": "dist/**/*.js",
+    "assets": [
+      "prompts.json",
+      "cache.json",
+      ".env.example"
+    ],
+    "targets": [
+      "node16-linux-x64",
+      "node16-macos-x64",
+      "node16-win-x64"
+    ],
+    "outputPath": "executables"
   },
   "dependencies": {
     "@ai-sdk/openai": "^1.3.16",
