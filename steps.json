@@ -1,0 +1,22 @@
+{
+    "steps": [
+        {
+            "goto": "https://www.amazon.com"
+        },
+        {
+            "act": "search for 'toothbrush'"
+        },
+        {
+            "act": "press enter"
+        },
+        {
+            "wait": 2
+        },
+        {
+            "act": "click on the first product"
+        },
+        {
+            "act": "click the 'Add to Cart' button"
+        }
+    ]
+}
